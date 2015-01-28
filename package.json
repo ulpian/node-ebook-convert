@@ -20,7 +20,9 @@
   ],
   "author": "seth vincent",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "extract-zip": "^1.0.3"
+  },
   "devDependencies": {
     "tape": "^2.12.0",
     "faucet": "0.0.1"

@@ -15,8 +15,17 @@ var epub = convert({
   ]
 });
 
-epub.on('end', function(){
-  console.log('did it!, the epub exists!')
+epub.on('data', function(data){
+    console.log('calibre: ' + data);
+});
+
+epub.on('error', function(data){
+    console.log('calibreError: ' + error);
+    d.reject('Failed to convert book; ' + error);
+});
+
+epub.on('close', function(status){
+  console.log('calibre: ' + status);
 });
 ```
 

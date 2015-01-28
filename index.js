@@ -1,13 +1,18 @@
-var spawn = require('child_process').spawn;
-var EventEmitter = require('events').EventEmitter;
+var spawn = require('child_process').spawn,
+    EventEmitter = require('events').EventEmitter,
+    extract = require('extract-zip');
 
 module.exports = function(options){
   return new EbookConvert(options);
 };
 
 function EbookConvert(options){
+  // file source
   this.source = options.source;
   this.target = options.target;
+  // extracted target
+  this.targetex = options.targetex;
+
   var arguments = [this.source, this.target];
 
   if (options.arguments){
@@ -46,7 +51,14 @@ function EbookConvert(options){
   });
 
   convert.on('close', function(code){
-    ee.emit('close', code);
+    // run extract
+    // extract contents of epub
+    extract(options.target, {dir: options.targetex}, function(err){
+      if (err) { err }
+      // extract has occured
+      console.log('epub extracted');
+      ee.emit('close', code);
+    });
   });
 
   return ee;
